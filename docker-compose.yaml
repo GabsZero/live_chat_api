@@ -1,0 +1,37 @@
+services:
+  app:
+    container_name: live_chat_api_nest
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    networks:
+      - db
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  db:
+    container_name: live_chat_database
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    ports:
+      - "5332:5432"
+    networks:
+      - db
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  
+networks:
+  db:
+    driver: bridge
