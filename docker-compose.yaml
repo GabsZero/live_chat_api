@@ -10,7 +10,6 @@ services:
       - '3000:3000'
     volumes:
       - .:/app
-      - /app/node_modules
 
   db:
     container_name: live_chat_database
