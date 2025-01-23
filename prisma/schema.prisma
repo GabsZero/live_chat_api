@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
@@ -26,8 +26,8 @@ model User {
 
 model UserContacts {
   id        Int   @id @default(autoincrement())
-  user User @relation("contact_friends", fields: [user_id], references: [id])
+  user Users @relation("contact_friends", fields: [user_id], references: [id])
   user_id  String
-  contact  User @relation("contacts_as_user", fields: [contact_id], references: [id])
+  contact  Users @relation("contacts_as_user", fields: [contact_id], references: [id])
   contact_id  String
 }
