@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { FileLogger } from 'src/app/FIleLogger';
 
 @Injectable()
 export class UsersService {
   private readonly prisma: PrismaClient;
+  private readonly logger: FileLogger = new FileLogger(UsersService.name, { timestamp: true });
   constructor() {
     this.prisma = new PrismaClient();
   }
@@ -18,6 +20,7 @@ export class UsersService {
     }) > 0;
 
     if(emailExists){
+      this.logger.error(`Email already exists: ${createUserDto.email}`, new Error("Email already exists").stack);
       return {
         message: "Email already exists",
         data: null,
