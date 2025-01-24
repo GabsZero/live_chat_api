@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { FileLogger } from 'src/app/FIleLogger';
+import { FileLogger } from './../app/FIleLogger';
 
 @Injectable()
 export class UsersService {
