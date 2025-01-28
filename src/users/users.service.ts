@@ -83,6 +83,11 @@ export class UsersService {
     })
 
     if(updateUserDto.contacts && result) {
+      await this.prisma.userContacts.deleteMany({
+        where: {
+          user_id: id
+        }
+      })
       updateUserDto.contacts.forEach( async (contact) => {
         const exists = await this.prisma.userContacts.findFirst({
           where: {
@@ -93,6 +98,7 @@ export class UsersService {
           }
         })
         
+        console.log(contact)
         if(!exists) {
           await this.prisma.userContacts.create({
             data: {
