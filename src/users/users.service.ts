@@ -98,7 +98,6 @@ export class UsersService {
           }
         })
         
-        console.log(contact)
         if(!exists) {
           await this.prisma.userContacts.create({
             data: {
